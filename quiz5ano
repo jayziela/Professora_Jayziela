@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz dos 5° Anos I e III</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 5px;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: #7f8c8d;
+            text-align: center;
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+
+        .question-box {
+            background-color: #ecf0f1;
+            border: 1px solid #bdc3c7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .options {
+            margin-top: 20px;
+        }
+
+        .option {
+            display: block;
+            background-color: #f9f9f9;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .option:hover {
+            background-color: #e0e6e9;
+            transform: translateY(-2px);
+        }
+
+        .option.correct {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        .rationale {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #555;
+            display: none;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .option.correct .rationale, .option.incorrect .rationale {
+            display: block;
+        }
+
+        .hint {
+            margin-top: 15px;
+            font-style: italic;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Quiz dos 5° anos I e III</h1>
+        <h2>Professora Jayziela</h2>
+        <br>
+        
+        <div class="quiz-container">
+            </div>
+    </div>
+
+    <footer>
+        <p>Praticar é o melhor caminho para aprender! Boa sorte!</p>
+    </footer>
+
+    <script>
+        const quizData = {
+            "questions": [
+                {
+                    "questionNumber": 1,
+                    "question": "Leia o texto para responder à pergunta.<br>\n\nA jabuticaba é uma fruta nativa da Mata Atlântica e cresce diretamente no tronco da jabuticabeira. Ela tem uma casca roxa, lisa e brilhante, e sua polpa é branca, macia e suculenta, com um sabor doce e levemente ácido. A fruta é muito utilizada para fazer geleias, licores e doces. A jabuticabeira é uma árvore de crescimento lento, mas pode produzir frutos por muitos anos.<br><br> Assim sendo, entendemos que a jabuticaba é:",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Uma fruta que cresce na ponta dos galhos.", "rationale": "A jabuticaba cresce diretamente no tronco da árvore, não na ponta dos galhos.", "isCorrect": false },
+                        { "text": "Uma fruta com casca verde e polpa dura.", "rationale": "O texto descreve a jabuticaba com casca roxa e polpa macia e suculenta.", "isCorrect": false },
+                        { "text": "Uma fruta que cresce diretamente no tronco da jabuticabeira.", "rationale": "O texto afirma claramente que a jabuticaba 'cresce diretamente no tronco da jabuticabeira', o que torna esta a resposta correta.", "isCorrect": true },
+                        { "text": "Uma fruta com polpa amarga e sem sabor.", "rationale": "O texto descreve a polpa como 'doce e levemente ácida', o que contradiz esta opção.", "isCorrect": false }
+                    ],
+                    "hint": "Releia a primeira frase do texto para encontrar a resposta sobre onde a jabuticaba cresce."
+                },
+                {
+                    "questionNumber": 2,
+                    "question": "Leia o texto abaixo e responda.<br>\n\nAntigamente, as cidades eram muito diferentes. A maioria das ruas não tinha asfalto, e o transporte era feito por carroças puxadas por cavalos. Não existiam carros, ônibus ou caminhões. A iluminação das ruas era feita por lampiões a gás. A vida era mais lenta e as pessoas costumavam se encontrar nas praças e conversar mais. <br><br> Como as pessoas se locomoviam na cidade?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Com moto e carro.", "rationale": "Não haviam motos e carros nessa época'.", "isCorrect": false },
+                        { "text": "Em carroças puxadas por cavalos.", "rationale": "O texto menciona que o transporte era 'feito por carroças puxadas por cavalos', o que responde diretamente à pergunta 'como'.", "isCorrect": true },
+                        { "text": "De bicicleta ou a pé.", "rationale": "O texto não menciona bicicletas ou a locomoção a pé, mas sim as carroças.", "isCorrect": false },
+                        { "text": "De carro, ônibus e caminhão.", "rationale": "O texto diz que 'não existiam carros, ônibus ou caminhões', o que torna esta opção incorreta.", "isCorrect": false }
+                    ],
+                    "hint": "Procure a parte que fala sobre o 'transporte' para encontrar a resposta."
+                },
+                {
+                    "questionNumber": 3,
+                    "question": "\n\nO ciclo da água é um processo natural e fundamental para a vida no planeta. Ele começa com a evaporação da água dos rios, lagos e oceanos, formando vapor que sobe para a atmosfera. Esse vapor se condensa e forma as nuvens. Quando as nuvens ficam carregadas, a água cai em forma de chuva, neve ou granizo, retornando à Terra e aos corpos d'água. <br><br> O texto fala sobre:",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "A evaporação, a condensação e a precipitação.", "rationale": "O texto descreve a evaporação (vapor que sobe), a condensação (formação das nuvens) e a precipitação (a água que cai), que são as três principais etapas do ciclo da água.", "isCorrect": true },
+                        { "text": "A fotossíntese e a respiração.", "rationale": "Fotossíntese e respiração são processos de seres vivos, não fazem parte do ciclo da água descrito no texto.", "isCorrect": false },
+                        { "text": "O derretimento do gelo e a formação de icebergs.", "rationale": "O derretimento do gelo pode ser parte do ciclo, mas não é a principal fase descrita, e a formação de icebergs não é uma etapa do ciclo.", "isCorrect": false },
+                        { "text": "A solidificação e a fusão.", "rationale": "O texto não menciona solidificação (passagem do estado líquido para o sólido) ou fusão (passagem do sólido para o líquido) como etapas principais.", "isCorrect": false }
+                    ],
+                    "hint": "Procure no texto as palavras que descrevem o que acontece com a água, desde que ela sobe até que ela retorna à Terra."
+                },
+                {
+                    "questionNumber": 4,
+                    "question": "Qual das frases a seguir apresenta uma característica de um texto literário, como um conto de fadas ou uma fábula?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Apresenta fatos e dados reais sobre um tema específico.", "rationale": "Essa é uma característica de textos informativos ou jornalísticos, não de textos literários.", "isCorrect": false },
+                        { "text": "Utiliza uma linguagem figurada, com personagens fictícios e o objetivo de emocionar ou entreter.", "rationale": "Textos literários usam a linguagem de forma criativa, com personagens inventados para entreter, emocionar ou transmitir uma moral, o que é a característica principal deste tipo de texto.", "isCorrect": true },
+                        { "text": "Explica um fenômeno científico usando linguagem técnica.", "rationale": "A explicação de fenômenos científicos com linguagem técnica é uma característica de textos didáticos ou científicos.", "isCorrect": false },
+                        { "text": "Tem a função de convencer o leitor a comprar algo ou a tomar uma atitude.", "rationale": "Esta é a característica de um texto publicitário ou de um texto de opinião, não de um texto literário.", "isCorrect": false }
+                    ],
+                    "hint": "Pense no propósito de uma história como 'A Bela e a Fera' ou 'A Lebre e a Tartaruga'."
+                },
+                {
+                    "questionNumber": 5,
+                    "question": "Leia o texto abaixo sobre a Amazônia e responda. <br> \n\nA Amazônia é a maior floresta tropical do mundo. Sua vegetação é densa e abriga uma biodiversidade enorme, com milhares de espécies de plantas e animais. Ela é um ecossistema fundamental para o equilíbrio do planeta, pois produz uma grande quantidade de oxigênio e regula o clima. Além de ser importante para a natureza, a floresta também é o lar de muitos povos indígenas, que mantêm tradições e conhecimentos únicos. <br><br> O que o texto informa sobre a Amazônia?",
+                    "imageUrl": null,
+                    "answerOptions": [
+			{ "text": "Que ela é a menor floresta do mundo e não produz oxigênio.", "rationale": "O texto diz que a Amazônia é a 'maior floresta tropical do mundo' e que 'produz uma grande quantidade de oxigênio', o que torna esta opção incorreta.", "isCorrect": false },
+			{ "text": "Que ela abriga uma rica biodiversidade e povos indígenas.", "rationale": "O texto menciona que a Amazônia 'abriga uma biodiversidade enorme' e 'também é o lar de muitos povos indígenas', tornando esta a resposta correta.", "isCorrect": true },
+                        { "text": "Que ela só é importante para a economia e não para a natureza.", "rationale": "O texto destaca a importância da floresta para a natureza ('ecossistema fundamental para o equilíbrio do planeta').", "isCorrect": false },
+                        { "text": "Que ela não tem animais, apenas plantas.", "rationale": "O texto afirma que a floresta abriga 'milhares de espécies de plantas e animais', o que contradiz esta afirmação.", "isCorrect": false }
+                    ],
+                    "hint": "Leia o texto e procure por palavras que descrevem o que podemos encontrar na Amazônia."
+                },
+                {
+                    "questionNumber": 6,
+                    "question": "Qual é a principal função do sol para a vida na Terra?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "A principal função do sol é fornecer luz para o universo.", "rationale": "Embora o sol forneça luz, sua principal função para a vida na Terra é fornecer a energia necessária para os processos vitais.", "isCorrect": false },
+                        { "text": "Fornecer calor e luz, que são essenciais para a fotossíntese das plantas e para manter o clima do planeta.", "rationale": "O sol é a fonte primária de energia para a Terra, e sua luz e calor são essenciais para a fotossíntese (produção de alimento para as plantas) e para regular o clima, tornando esta a resposta correta.", "isCorrect": true },
+                        { "text": "Ajudar as plantas a dormirem durante a noite.", "rationale": "A ausência de luz solar à noite afeta o ciclo das plantas, mas a função do sol é fornecer energia durante o dia, não ajudar as plantas a dormirem.", "isCorrect": false },
+                        { "text": "Fazer com que as estrelas brilhem mais forte.", "rationale": "O sol é uma estrela, e a luz das outras estrelas não depende diretamente do sol.", "isCorrect": false }
+                    ],
+                    "hint": "Pense sobre o que o sol nos dá e como isso afeta as plantas e a temperatura do planeta."
+                },
+                {
+                    "questionNumber": 7,
+                    "question": "\n\nDurante o período colonial, o Brasil foi explorado pela Coroa Portuguesa. As principais atividades econômicas eram a produção de cana-de-açúcar no litoral e, mais tarde, a mineração de ouro e diamantes na região de Minas Gerais. Grande parte do trabalho nas lavouras e nas minas era realizada por escravos africanos, trazidos à força para o país. Essa exploração gerou muita riqueza para Portugal e moldou a sociedade brasileira. <br><br> Qual das afirmações abaixo é verdadeira segundo o texto?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "As principais atividades econômicas eram a pesca e a caça.", "rationale": "O texto menciona que as principais atividades eram a produção de cana-de-açúcar e a mineração de ouro.", "isCorrect": false },
+                        { "text": "O Brasil era explorado pela Inglaterra.", "rationale": "O texto afirma que o Brasil foi explorado pela 'Coroa Portuguesa', não pela Inglaterra.", "isCorrect": false },
+                        { "text": "As principais atividades econômicas eram a produção de cana-de-açúcar e a mineração.", "rationale": "O texto descreve que 'As principais atividades econômicas eram a produção de cana-de-açúcar... e, mais tarde, a mineração de ouro e diamantes', o que torna esta a resposta correta.", "isCorrect": true },
+                        { "text": "O trabalho era realizado apenas por pessoas livres.", "rationale": "O texto afirma que 'Grande parte do trabalho... era realizada por escravos africanos', o que contradiz esta opção.", "isCorrect": false }
+                    ],
+                    "hint": "Procure a parte do texto que fala sobre as 'atividades econômicas' no período colonial."
+                },
+                {
+                    "questionNumber": 8,
+                    "question": "Qual das características abaixo descreve o solo arenoso?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "É um solo muito fértil, que retém bastante água e é ideal para a agricultura.", "rationale": "Essa é a descrição do solo massapê, que é argiloso e escuro, não do solo arenoso.", "isCorrect": false },
+                        { "text": "É um solo com grãos finos, úmido e difícil de ser trabalhado.", "rationale": "Essa é a descrição do solo argiloso, que é compacto e pouco permeável, e não do arenoso.", "isCorrect": false },
+                        { "text": "É um solo com grãos maiores, que não retém muita água e é pobre em nutrientes.", "rationale": "O solo arenoso tem grãos maiores e espaçados, o que permite que a água escoe facilmente. Por isso, ele retém pouca água e é menos fértil.", "isCorrect": true },
+                        { "text": "É um solo com muita matéria orgânica e ideal para plantações.", "rationale": "Essa é a descrição do solo humoso, rico em húmus e ideal para plantações, não do arenoso.", "isCorrect": false }
+                    ],
+                    "hint": "Pense no nome 'areia' e nas características de um solo que se parece com ela."
+                },
+                {
+                    "questionNumber": 9,
+                    "question": "\n\nOs rios são importantes para as pessoas de muitas maneiras. Eles fornecem água para beber e para a agricultura, são usados para a produção de energia nas usinas hidrelétricas e servem como vias de transporte para barcos e mercadorias. Muitos animais vivem neles, e a paisagem em volta dos rios é, muitas vezes, muito bonita.<br><br> Segundo o texto como usamos os rios?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Apenas para a paisagem e o lazer das pessoas.", "rationale": "O texto menciona que os rios têm muitas outras utilidades além da paisagem e do lazer.", "isCorrect": false },
+                        { "text": "Eles servem apenas para a pesca.", "rationale": "O texto apresenta outras utilidades além da pesca, como fornecer água e energia.", "isCorrect": false },
+                         { "text": "Para fornecer água, energia, transporte e como habitat para animais.", "rationale": "O texto descreve todas essas utilidades: 'fornecem água para beber', 'produção de energia nas usinas hidrelétricas', 'vias de transporte' e que 'Muitos animais vivem neles', o que torna esta a resposta correta.", "isCorrect": true },
+			{ "text": "Eles não são importantes para o ser humano.", "rationale": "O texto começa dizendo que 'Os rios são importantes para as pessoas de muitas maneiras', o que contradiz esta opção.", "isCorrect": false }
+                    ],
+                    "hint": "Releia o texto e liste todas as formas como os rios são úteis para as pessoas e a natureza."
+                },
+                {
+                    "questionNumber": 10,
+                    "question": "O que são mapas e para que servem?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "São desenhos que mostram um lugar e servem para decorar as paredes.", "rationale": "Mapas servem para representar lugares, mas seu objetivo principal não é a decoração, mas sim a orientação e a informação geográfica.", "isCorrect": false },
+                        { "text": "São representações reduzidas e simbólicas de um lugar, que servem para nos orientar e localizar pontos.", "rationale": "Os mapas são representações em escala de um espaço, usando símbolos para mostrar informações, o que os torna ferramentas essenciais para a orientação e localização.", "isCorrect": true },
+                        { "text": "São fotografias de satélite para mostrar a natureza.", "rationale": "Embora fotografias de satélite possam ser usadas para fazer mapas, elas não são a definição de mapa, que é uma representação simbólica.", "isCorrect": false },
+                        { "text": "São apenas desenhos bonitos de um país.", "rationale": "Mapas são muito mais do que desenhos e têm uma função prática e informativa, não apenas estética.", "isCorrect": false }
+                    ],
+                    "hint": "Pense na principal utilidade de um mapa quando você precisa encontrar um endereço ou um local."
+                },
+                {
+                    "questionNumber": 11,
+                    "question": "\n\nA invenção da roda, há milhares de anos, mudou a vida das sociedades. Antes, os objetos pesados precisavam ser arrastados ou carregados, o que era um trabalho muito difícil. Com a roda, foi possível criar carroças e, mais tarde, veículos mais complexos, facilitando o transporte de mercadorias e pessoas. A roda também foi usada em moinhos, potes de cerâmica e muitas outras invenções. <br><br> Por que as rodas foram importantes para a humanidade?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Tornou o transporte mais lento e difícil.", "rationale": "O texto diz o contrário, que a roda 'facilitou o transporte'.", "isCorrect": false },
+                        { "text": "Ela fez com que as pessoas começassem a arrastar objetos pesados.", "rationale": "O texto diz que a roda foi criada para evitar que as pessoas tivessem que arrastar objetos pesados.", "isCorrect": false },
+                        { "text": "Ela só foi usada para fazer potes de cerâmica.", "rationale": "O texto menciona o uso da roda em 'moinhos, potes de cerâmica e muitas outras invenções'.", "isCorrect": false },
+ 			{ "text": "Ela facilitou o transporte de mercadorias e pessoas.", "rationale": "O texto afirma que, com a roda, 'foi possível criar carroças e, mais tarde, veículos mais complexos, facilitando o transporte de mercadorias e pessoas'.", "isCorrect": true }
+                    ],
+                    "hint": "Pense nas mudanças que a roda trouxe na forma como as coisas eram levadas de um lugar para outro."
+                },
+                {
+                    "questionNumber": 12,
+                    "question": "\n\nUm vulcão é uma abertura na superfície da Terra por onde a lava, cinzas e gases quentes escapam do interior do planeta. A lava é uma rocha derretida que pode causar grande destruição quando entra em erupção, mas ela também pode criar novas terras. Os vulcões geralmente se localizam perto das bordas das placas tectônicas. <br><br> Segundo o texto um vulcão é:",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Uma montanha com lava dentro, que explode quando fica superaquecida pelo sol.", "rationale": "Errado. A resposta é que é uma abertura para a lava, cinzas e gases quentes escaparem.", "isCorrect": false },
+                        { "text": "Uma abertura para a lava, cinzas e gases quentes escaparem do interior da Terra.", "rationale": "O texto descreve o vulcão como 'uma abertura na superfície da Terra por onde a lava, cinzas e gases quentes escapam do interior do planeta'.", "isCorrect": true },
+                        { "text": "Uma montanha onde só vivem animais.", "rationale": "O texto não descreve o vulcão como um habitat para animais, e sim como uma abertura geológica.", "isCorrect": false },
+                        { "text": "Uma rocha derretida que fica na superfície da Terra.", "rationale": "O texto define a lava como a rocha derretida, não o vulcão em si. A lava sai do vulcão.", "isCorrect": false }
+                    ],
+                    "hint": "Procure a definição de vulcão no texto para encontrar a resposta correta."
+                },
+                {
+                    "questionNumber": 13,
+                    "question": "\n\nA vida dos índigenas em uma aldeia é muito ligada à natureza. Eles caçam, pescam e colhem para se alimentar. As casas, chamadas de ocas, são feitas com materiais que encontram na floresta, como palha e madeira. Os índigenas têm um grande respeito pela natureza e passam seus conhecimentos de geração em geração, por meio de histórias e rituais.<br><br> Qual a forma de subsitência dos índigenas? ",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "A caça, a pesca e a agricultura.", "rationale": "O texto menciona que 'Eles caçam, pescam e colhem para se alimentar', indicando que a caça e a pesca são atividades essenciais, juntamente com a coleta.", "isCorrect": true },
+                        { "text": "A venda de carros e celulares.", "rationale": "Esta opção não tem relação com o texto, que descreve uma vida ligada à natureza.", "isCorrect": false },
+                        { "text": "A construção de prédios na cidade.", "rationale": "O texto fala sobre a vida em aldeias e o uso de materiais naturais, não sobre a vida na cidade.", "isCorrect": false },
+                        { "text": "A produção de eletricidade e o trabalho em fábricas.", "rationale": "O texto não menciona a produção de eletricidade ou o trabalho em fábricas, mas sim a caça e a pesca como atividades de subsistência.", "isCorrect": false }
+                    ],
+                    "hint": "O texto descreve as atividades de subsistência dos índios, ou seja, as formas como eles obtêm seu alimento."
+                },
+                {
+                    "questionNumber": 14,
+                    "question": "Qual das frases a seguir descreve uma característica da poesia?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Apresenta fatos e informações de forma direta e objetiva.", "rationale": "Essa é uma característica de textos informativos, não da poesia.", "isCorrect": false },
+                        { "text": "É um texto que busca emocionar e tem uma estrutura com versos e estrofes.", "rationale": "A poesia utiliza a linguagem de forma artística para expressar sentimentos, emoções e ideias, e sua estrutura é composta de versos e estrofes.", "isCorrect": true },
+                        { "text": "É uma história longa, com muitos personagens e acontecimentos.", "rationale": "Essa é a característica de um romance ou uma narrativa mais longa, não de uma poesia, que é geralmente mais curta e centrada na forma e no ritmo.", "isCorrect": false },
+                        { "text": "Seu objetivo é ensinar uma lição de moral no final.", "rationale": "Esta é a característica de uma fábula, que é um tipo de narrativa, não uma poesia.", "isCorrect": false }
+                    ],
+                    "hint": "Pense na forma como uma canção é escrita, com ritmo e rima."
+                },
+                {
+                    "questionNumber": 15,
+                    "question": "\n\nAs formigas são insetos sociais que vivem em colônias. A colônia é dividida em três grupos principais: a rainha, que é responsável por colocar ovos; os machos, que têm a função de reprodução; e as operárias, que são as fêmeas estéreis e realizam a maioria das tarefas, como buscar comida, construir o formigueiro e proteger a rainha.<br><br> Conforme o texto é verdade que:",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "A rainha é responsável por buscar comida.", "rationale": "A rainha é responsável por colocar ovos. As operárias são as responsáveis por buscar comida.", "isCorrect": false },
+                        { "text": "Os machos são responsáveis por proteger a colônia.", "rationale": "Os machos têm a função de reprodução. As operárias são as responsáveis por proteger a colônia.", "isCorrect": false },
+                        { "text": "As operárias realizam a maioria das tarefas da colônia.", "rationale": "O texto afirma que as operárias 'realizam a maioria das tarefas, como buscar comida, construir o formigueiro e proteger a rainha'.", "isCorrect": true },
+                        { "text": "A rainha, os machos e as operárias, que trabalham juntas e têm as mesmas funções.", "rationale": "O texto afirma que a colônia é dividida em grupos com 'funções' diferentes.", "isCorrect": false }
+                    ],
+                    "hint": "Procure a parte do texto que descreve as funções das operárias para encontrar a resposta correta."
+                },
+                {
+                    "questionNumber": 16,
+                    "question": "\n\nO papiro foi um dos primeiros materiais a serem usados para a escrita, antes do papel. Ele era feito de uma planta aquática que crescia no Egito Antigo. As hastes da planta eram cortadas em tiras e prensadas, formando folhas finas. Depois, as folhas eram coladas umas nas outras, criando rolos. O papiro era leve, fácil de transportar e permitiu que a escrita se espalhasse por diferentes lugares. <br><br> Segundo o texto, como era o papiro?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Era feito de pele de animal e era muito pesado para ser transportado.", "rationale": "O texto menciona que o papiro era feito de uma planta, não de pele de animal.", "isCorrect": false },
+                        { "text": "Era feito de uma planta aquática e era leve e fácil de transportar.", "rationale": "O texto diz que o papiro era feito de uma 'planta aquática' e que era 'leve, fácil de transportar'.", "isCorrect": true },
+                        { "text": "Era feito de madeira e só existia na China.", "rationale": "O texto afirma que o papiro era feito de uma planta aquática e era usado no Egito Antigo.", "isCorrect": false },
+                        { "text": "Não era usado para a escrita, apenas para decoração.", "rationale": "O texto diz que o papiro foi um dos primeiros materiais usados 'para a escrita'.", "isCorrect": false }
+                    ],
+                    "hint": "O texto descreve como o papiro era feito e quais eram suas características principais."
+                },
+                {
+                    "questionNumber": 17,
+                    "question": "O que são as fases da lua e quais são elas?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "São os momentos em que a Lua brilha mais forte no céu, sendo elas: Lua Nova, Lua Minguante, Lua Crescente e Lua Cheia.", "rationale": "As fases da lua não são sobre o brilho, mas sim a quantidade de luz solar que a parte visível da lua recebe. A Lua Cheia é a que tem o brilho mais forte.", "isCorrect": false },
+                        { "text": "São as diferentes formas que vemos a Lua no céu, sendo elas: Lua Nova, Lua Crescente, Lua Cheia e Lua Minguante.", "rationale": "As fases da Lua são as diferentes aparências que ela tem no céu, que dependem da quantidade de luz solar que sua face visível recebe em diferentes momentos.", "isCorrect": true },
+                        { "text": "São as mudanças de temperatura da Lua, que são: Lua Quente e Lua Fria.", "rationale": "As fases da lua não são sobre a temperatura, mas sim a sua aparência.", "isCorrect": false },
+                        { "text": "São as mudanças de cor da Lua, sendo elas: Lua Azul e Lua Laranja.", "rationale": "A cor da Lua pode mudar por causa de fenômenos na atmosfera da Terra, mas não faz parte das fases da lua.", "isCorrect": false }
+                    ],
+                    "hint": "Pense sobre as diferentes 'aparências' da Lua que você vê ao longo do mês."
+                },
+                {
+                    "questionNumber": 18,
+                    "question": "\n\nA reciclagem é o processo de transformar objetos usados em novos produtos, evitando que o lixo se acumule na natureza. Isso ajuda a economizar energia e matérias-primas, como água e minérios. O papel, o plástico, o vidro e o metal são exemplos de materiais que podem ser reciclados. Para reciclar, é importante separar o lixo em casa, colocando cada material em uma lixeira específica.<br><br> Por que realizamos a reciclagem?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Para que o lixo se acumule na natureza.", "rationale": "O texto afirma que a reciclagem 'evita que o lixo se acumule na natureza'.", "isCorrect": false },
+                        { "text": "Para transformar objetos usados em novos produtos e economizar recursos.", "rationale": "O texto descreve que a reciclagem 'é o processo de transformar objetos usados em novos produtos' e que 'ajuda a economizar energia e matérias-primas'.", "isCorrect": true },
+                        { "text": "Apenas para economizar espaço nos lixões.", "rationale": "O texto menciona que a reciclagem também economiza energia e matérias-primas.", "isCorrect": false },
+                        { "text": "Apenas para que o plástico se transforme em novo plástico.", "rationale": "O texto diz que a reciclagem transforma 'objetos usados em novos produtos', e não apenas plástico.", "isCorrect": false }
+                    ],
+                    "hint": "O texto explica o objetivo da reciclagem. Releia o início do texto."
+                },
+                {
+                    "questionNumber": 19,
+                    "question": "Como a água chega até a nossa casa?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Ela é tirada do ar e colocada diretamente nas torneiras.", "rationale": "A água não é tirada diretamente do ar e colocada nas torneiras. Ela passa por um processo complexo de tratamento.", "isCorrect": false },
+                        { "text": "Ela vem de rios ou poços, é tratada em estações e depois distribuída por tubulações.", "rationale": "A água é captada de fontes naturais (rios, poços, represas), passa por um processo de tratamento para se tornar potável e, em seguida, é distribuída por uma rede de tubos até as residências.", "isCorrect": true },
+                        { "text": "É comprada em garrafas e entregue pelos caminhões.", "rationale": "A água engarrafada é um tipo de água, mas não é a forma como a água da torneira chega até as nossas casas.", "isCorrect": false },
+                        { "text": "Ela é criada dentro de casa com um filtro mágico.", "rationale": "A água não é criada dentro de casa. O filtro é usado para limpá-la, mas a água precisa vir de uma fonte.", "isCorrect": false }
+                    ],
+                    "hint": "Pense no processo que a água faz desde a natureza até a sua casa, incluindo a limpeza para se tornar potável."
+                },
+                {
+                    "questionNumber": 20,
+                    "question": "\n\nO sistema solar é composto pelo Sol e por oito planetas que giram em torno dele. O Sol é uma estrela gigante que fornece luz e calor para todos os planetas. Cada planeta tem características únicas, como o Mercúrio, que é o mais próximo do Sol, e Netuno, que é o mais distante. A Terra é o terceiro planeta a partir do Sol e o único conhecido por ter vida. <br><br> Qual das afirmativas abaixo é verdadeira segundo o texto?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "É um sistema composto por uma estrela e cinco planetas.", "rationale": "O texto afirma que o sistema solar é composto por 'oito planetas'.", "isCorrect": false },
+                        { "text": "O Sol é um planeta que gira em torno da Terra.", "rationale": "O texto diz que o Sol é uma 'estrela gigante' e que os planetas giram 'em torno dele'.", "isCorrect": false },
+                        { "text": "É composto pelo Sol e por oito planetas que giram em torno dele.", "rationale": "O texto afirma que 'O sistema solar é composto pelo Sol e por oito planetas que giram em torno dele'.", "isCorrect": true },
+                        { "text": "Todos os planetas são iguais e têm vida.", "rationale": "O texto diz que a Terra é o 'único conhecido por ter vida' e que 'Cada planeta tem características únicas'.", "isCorrect": false }
+                    ],
+                    "hint": "O texto descreve o que o sistema solar é, e quantos planetas o formam."
+                },
+                {
+                    "questionNumber": 21,
+                    "question": "Qual a principal característica de um animal mamífero?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Ter bico e botar ovos.", "rationale": "Ter bico e botar ovos são características de aves, não de mamíferos.", "isCorrect": false },
+                        { "text": "Viver na água e respirar por brânquias.", "rationale": "Viver na água e respirar por brânquias são características de peixes, não de mamíferos.", "isCorrect": false },
+                        { "text": "Ter o corpo coberto de penas e voar.", "rationale": "Ter o corpo coberto de penas e voar são características de aves, não de mamíferos.", "isCorrect": false },
+                        { "text": "Alimentar os filhotes com leite e ter o corpo coberto de pelos.", "rationale": "A principal característica dos mamíferos é que eles produzem leite para alimentar os filhotes. Além disso, a grande maioria tem o corpo coberto de pelos.", "isCorrect": true }
+                    ],
+                    "hint": "Pense nas características de um cachorro, um gato, ou até mesmo do ser humano."
+                },
+                {
+                    "questionNumber": 22,
+                    "question": "\n\nO desmatamento é a remoção de grandes áreas de florestas para dar lugar a outras atividades, como agricultura, pastagens para o gado ou a construção de cidades. As consequências do desmatamento são muitas e graves. O desmatamento causa a perda de biodiversidade (muitos animais perdem seu lar), a erosão do solo e contribui para as mudanças climáticas, pois diminui a capacidade da floresta de absorver gás carbônico. <br><br> Responda: o que é desmatamento?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Asfaltar estradas e criar estacionamentos.", "rationale": "Errado.", "isCorrect": false },
+                        { "text": "O desmatamento é a remoção de grandes áreas de florestas.", "rationale": "O texto explica que 'O desmatamento é a remoção de grandes áreas de florestas'.", "isCorrect": true },
+                        { "text": "É a construção de prédios na cidade.", "rationale": "Embora a construção de cidades seja um dos motivos, a definição de desmatamento é a remoção de florestas.", "isCorrect": false },
+                        { "text": "É a perda de rios e lagos.", "rationale": "O desmatamento pode afetar os rios, mas a sua definição principal é a remoção de florestas, não a perda de rios.", "isCorrect": false }
+                    ],
+                    "hint": "O texto define o que é o desmatamento na primeira frase. Releia essa parte."
+                },
+                {
+                    "questionNumber": 23,
+                    "question": "Leia o texto a seguir para responder. <br>\n\nA invenção da escrita foi um dos momentos mais importantes da história humana. Antes da escrita, o conhecimento era passado de boca em boca, por meio de histórias e canções. Com a escrita, foi possível registrar e guardar informações por muito tempo, como leis, contos e registros de comércio. A primeira forma de escrita foi criada na Mesopotâmia, há cerca de 5.500 anos, usando símbolos em argila. <br><br> Para que é usada a escrita?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Para registrar e guardar informações por muito tempo.", "rationale": "O texto explica que 'Com a escrita, foi possível registrar e guardar informações por muito tempo, como leis, contos e registros de comércio'.", "isCorrect": true },
+                        { "text": "Para as pessoas se comunicarem por voz.", "rationale": "A comunicação por voz já existia antes da escrita.", "isCorrect": false },
+                        { "text": "Para desenhar animais nas paredes das cavernas.", "rationale": "Essa forma de registro é a arte rupestre, que é diferente da escrita.", "isCorrect": false },
+                        { "text": "Para as pessoas esquecerem as histórias antigas.", "rationale": "O texto diz o contrário, que a escrita ajudou a guardar as informações.", "isCorrect": false }
+                    ],
+                    "hint": "Pense no que a escrita permitiu que os seres humanos fizessem com as informações e o conhecimento."
+                },
+                {
+                    "questionNumber": 24,
+                    "question": "Qual das características abaixo se aplica a um solo argiloso?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "É um solo com grãos grandes, que escoa a água facilmente e é bom para a agricultura.", "rationale": "Essa é uma característica do solo arenoso, que tem grãos maiores e não é ideal para a maioria das plantações por não reter água.", "isCorrect": false },
+                        { "text": "É um solo que retém muita água, tem grãos finos e, quando molhado, fica com a aparência de 'barro'.", "rationale": "O solo argiloso é composto por grãos muito pequenos, o que o torna compacto e capaz de reter muita água, formando uma massa pegajosa como o barro quando molhado.", "isCorrect": true },
+                        { "text": "É um solo com pouca matéria orgânica, sem nutrientes.", "rationale": "O solo com pouca matéria orgânica é o solo arenoso. O solo argiloso pode ser fértil, mas é principalmente conhecido por sua capacidade de reter água.", "isCorrect": false },
+                        { "text": "É um solo preto, macio e rico em húmus.", "rationale": "Essa é uma descrição do solo humoso, que é ideal para a agricultura.", "isCorrect": false }
+                    ],
+                    "hint": "Pense no tipo de solo que usamos para modelar objetos, como vasos de argila."
+                },
+                {
+                    "questionNumber": 25,
+                    "question": "\n\nO Egito Antigo se desenvolveu ao longo das margens do Rio Nilo, que era a principal fonte de água para a agricultura e para o transporte. Os egípcios construíram grandes pirâmides e monumentos em homenagem aos seus faraós e deuses. Eles também criaram sua própria forma de escrita, chamada hieróglifo, que era usada para registrar a história e as crenças do povo. <br><br> Onde o povo do Antigo Egito se desenvolveu?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Ao longo das margens do Rio Nilo.", "rationale": "O texto afirma que o Egito Antigo se desenvolveu 'ao longo das margens do Rio Nilo'.", "isCorrect": true },
+                        { "text": "Perto das montanhas mais altas da África.", "rationale": "O texto não menciona as montanhas, mas sim o Rio Nilo.", "isCorrect": false },
+                        { "text": "Nas florestas tropicais da América do Sul.", "rationale": "O texto fala sobre o Egito Antigo e o Rio Nilo, que ficam na África.", "isCorrect": false },
+                        { "text": "Em ilhas no meio do oceano.", "rationale": "O texto se refere a uma civilização que se desenvolveu ao longo de um rio, não em ilhas.", "isCorrect": false }
+                    ],
+                    "hint": "Procure a parte do texto que explica onde a civilização do Egito Antigo se desenvolveu."
+                },
+                {
+                    "questionNumber": 26,
+                    "question": "Qual é a principal função do esqueleto no corpo humano?",
+                    "imageUrl": null,
+                    "answerOptions": [
+                        { "text": "Transportar oxigênio para os músculos.", "rationale": "O transporte de oxigênio é a função da circulação sanguínea, não do esqueleto.", "isCorrect": false },
+                        { "text": "Cuidar da nossa pele e do nosso cabelo.", "rationale": "O esqueleto não tem relação direta com o cuidado da pele ou do cabelo.", "isCorrect": false },
+                        { "text": "Sustentar o corpo e proteger os órgãos internos.", "rationale": "O esqueleto serve como a estrutura que dá forma e sustentação ao nosso corpo, além de proteger órgãos vitais como o cérebro (crânio) e o coração (caixa torácica).", "isCorrect": true },
+                        { "text": "Ajudar o corpo a digerir os alimentos.", "rationale": "A digestão é uma função do sistema digestório, não do esqueleto.", "isCorrect": false }
+                    ],
+                    "hint": "Pense no que aconteceria com o nosso corpo se não tivéssemos ossos."
+                }
+            ]
+        };
+
+        const quizContainer = document.querySelector('.quiz-container');
+
+        quizData.questions.forEach(q => {
+            const questionBox = document.createElement('div');
+            questionBox.className = 'question-box';
+
+            const questionNumber = document.createElement('div');
+            questionNumber.className = 'question-number';
+            questionNumber.textContent = `Questão ${q.questionNumber}`;
+            questionBox.appendChild(questionNumber);
+
+            const questionText = document.createElement('p');
+            questionText.className = 'question-text';
+            questionText.innerHTML = q.question.replace(/\n\n/g, ' ').replace(/<br>/g, '<br>'); // Formata o texto
+            questionBox.appendChild(questionText);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+
+            q.answerOptions.forEach(opt => {
+                const optionLabel = document.createElement('label');
+                optionLabel.className = 'option';
+                optionLabel.textContent = opt.text;
+
+                const rationaleDiv = document.createElement('div');
+                rationaleDiv.className = 'rationale';
+                rationaleDiv.textContent = opt.rationale;
+
+                optionLabel.appendChild(rationaleDiv);
+
+                optionLabel.addEventListener('click', () => {
+                    const allOptions = questionBox.querySelectorAll('.option');
+                    allOptions.forEach(o => o.classList.remove('correct', 'incorrect'));
+                    
+                    if (opt.isCorrect) {
+                        optionLabel.classList.add('correct');
+                    } else {
+                        optionLabel.classList.add('incorrect');
+                    }
+                });
+
+                optionsDiv.appendChild(optionLabel);
+            });
+
+            questionBox.appendChild(optionsDiv);
+
+            const hintDiv = document.createElement('p');
+            hintDiv.className = 'hint';
+            hintDiv.textContent = `Dica: ${q.hint}`;
+            questionBox.appendChild(hintDiv);
+
+            quizContainer.appendChild(questionBox);
+        });
+    </script>
+
+</body>
+</html>
