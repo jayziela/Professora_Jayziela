@@ -120,6 +120,35 @@
             color: #7f8c8d;
             text-align: center;
         }
+#quiz-container {
+    display: none;
+}
+#start-screen {
+    text-align: center;
+    padding: 40px;
+}
+#student-name {
+    padding: 10px;
+    font-size: 1em;
+    width: 80%;
+    max-width: 400px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+#start-button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    background-color: #2c3e50;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+#start-button:hover {
+    background-color: #34495e;
+}
     </style>
 </head>
 <body>
@@ -127,6 +156,11 @@
     <div class="container">
         <h1>Quiz dos 5° anos I e III</h1>
         <h2>Professora Jayziela</h2>
+	<div id="start-screen">
+    		<p>Para começar, digite seu nome e clique em 'Iniciar'.</p>
+    		<input type="text" id="student-name" placeholder="Digite seu nome aqui">
+   		<button id="start-button">Iniciar Quiz</button>
+	</div>
         <br>
         
         <div class="quiz-container">
@@ -455,59 +489,130 @@
             ]
         };
 
-        const quizContainer = document.querySelector('.quiz-container');
+const startScreen = document.getElementById('start-screen');
+const quizContainer = document.querySelector('.quiz-container');
+const studentNameInput = document.getElementById('student-name');
+const startButton = document.getElementById('start-button');
 
-        quizData.questions.forEach(q => {
-            const questionBox = document.createElement('div');
-            questionBox.className = 'question-box';
+let score = 0;
+let startTime;
+let name = "";
+let questionsAnswered = 0;
 
-            const questionNumber = document.createElement('div');
-            questionNumber.className = 'question-number';
-            questionNumber.textContent = `Questão ${q.questionNumber}`;
-            questionBox.appendChild(questionNumber);
+startButton.addEventListener('click', () => {
+    name = studentNameInput.value.trim();
+    if (name === "") {
+        alert("Por favor, digite seu nome para começar.");
+        return;
+    }
+    
+    // Esconde a tela de início e mostra o quiz
+    startScreen.style.display = 'none';
+    quizContainer.style.display = 'block';
+    
+    // Inicia o cronômetro
+    startTime = Date.now();
+    
+    // AQUI É A MUDANÇA: O código que cria as perguntas foi movido para cá
+    quizData.questions.forEach(q => {
+        const questionBox = document.createElement('div');
+        questionBox.className = 'question-box';
 
-            const questionText = document.createElement('p');
-            questionText.className = 'question-text';
-            questionText.innerHTML = q.question.replace(/\n\n/g, ' ').replace(/<br>/g, '<br>'); // Formata o texto
-            questionBox.appendChild(questionText);
+        const questionNumber = document.createElement('div');
+        questionNumber.className = 'question-number';
+        questionNumber.textContent = `Questão ${q.questionNumber}`;
+        questionBox.appendChild(questionNumber);
 
-            const optionsDiv = document.createElement('div');
-            optionsDiv.className = 'options';
+        const questionText = document.createElement('p');
+        questionText.className = 'question-text';
+        questionText.innerHTML = q.question.replace(/\n\n/g, '<br>').replace(/<br>/g, '<br>');
+        questionBox.appendChild(questionText);
 
-            q.answerOptions.forEach(opt => {
-                const optionLabel = document.createElement('label');
-                optionLabel.className = 'option';
-                optionLabel.textContent = opt.text;
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
 
-                const rationaleDiv = document.createElement('div');
-                rationaleDiv.className = 'rationale';
-                rationaleDiv.textContent = opt.rationale;
-
-                optionLabel.appendChild(rationaleDiv);
-
-                optionLabel.addEventListener('click', () => {
-                    const allOptions = questionBox.querySelectorAll('.option');
-                    allOptions.forEach(o => o.classList.remove('correct', 'incorrect'));
-                    
-                    if (opt.isCorrect) {
-                        optionLabel.classList.add('correct');
-                    } else {
-                        optionLabel.classList.add('incorrect');
-                    }
-                });
-
-                optionsDiv.appendChild(optionLabel);
+        q.answerOptions.forEach(opt => {
+            const optionLabel = document.createElement('label');
+            optionLabel.className = 'option';
+            optionLabel.innerHTML = `${opt.text}<div class="rationale">${opt.rationale}</div>`;
+            
+            optionLabel.addEventListener('click', () => {
+                if (questionBox.getAttribute('data-answered') === 'true') {
+                    return;
+                }
+                
+                const allOptions = questionBox.querySelectorAll('.option');
+                allOptions.forEach(o => o.classList.remove('correct', 'incorrect'));
+                
+                if (opt.isCorrect) {
+                    optionLabel.classList.add('correct');
+                    score++;
+                } else {
+                    optionLabel.classList.add('incorrect');
+                }
+                
+                questionBox.setAttribute('data-answered', 'true');
+                questionsAnswered++;
+                
+                if (questionsAnswered === quizData.questions.length) {
+                    setTimeout(showResults, 1500);
+                }
             });
 
-            questionBox.appendChild(optionsDiv);
-
-            const hintDiv = document.createElement('p');
-            hintDiv.className = 'hint';
-            hintDiv.textContent = `Dica: ${q.hint}`;
-            questionBox.appendChild(hintDiv);
-
-            quizContainer.appendChild(questionBox);
+            optionsDiv.appendChild(optionLabel);
         });
+
+        questionBox.appendChild(optionsDiv);
+
+        const hintDiv = document.createElement('p');
+        hintDiv.className = 'hint';
+        hintDiv.textContent = `Dica: ${q.hint}`;
+        questionBox.appendChild(hintDiv);
+
+        quizContainer.appendChild(questionBox);
+    });
+});
+
+function showResults() {
+    const endTime = Date.now();
+    const totalTimeInSeconds = (endTime - startTime) / 1000;
+    
+    // Calcula minutos e segundos
+    const minutes = Math.floor(totalTimeInSeconds / 60);
+    const seconds = (totalTimeInSeconds % 60).toFixed(0);
+    
+    // Formata a mensagem final
+    let timeMessage = "";
+    if (minutes > 0) {
+        timeMessage = `${minutes} minuto${minutes > 1 ? 's' : ''} e ${seconds} segundo${seconds > 1 || seconds == 0 ? 's' : ''}`;
+    } else {
+        timeMessage = `${seconds} segundo${seconds > 1 || seconds == 0 ? 's' : ''}`;
+    }
+
+    const resultMessage = `Parabéns, ${name}! Você acertou ${score} de ${quizData.questions.length} perguntas e levou ${timeMessage} para completar o quiz.`;
+    
+    quizContainer.innerHTML = `
+        <div class="result-box">
+            <h1>Quiz Finalizado!</h1>
+            <p>${resultMessage}</p>
+            <p>Sua pontuação final é: <strong>${score}/${quizData.questions.length}</strong></p>
+            <p>Seu tempo total foi: <strong>${timeMessage}</strong></p>
+            <p>Mostre este resultado para a professora!</p>
+        </div>
+    `;
+    
+    const resultStyle = document.createElement('style');
+    resultStyle.innerHTML = `
+        .result-box {
+            text-align: center;
+            padding: 30px;
+            background-color: #ecf0f1;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    `;
+    document.head.appendChild(resultStyle);
+}
     </script>
 
 </body>
