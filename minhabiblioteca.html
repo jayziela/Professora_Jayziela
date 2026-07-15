@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Estante Virtual - Organização de Biblioteca Pessoal</title>
+    <!-- Google Identity Services client library -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Google Fonts: Playfair Display (Serif), Outfit (Moderno sans-serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Esquerda (Painel do Usuário) -->
+        <aside class="sidebar">
+            <!-- Botão/Contêiner do Google Login -->
+            <div class="google-auth-panel">
+                <div id="googleSignInButton"></div>
+                <button class="btn btn-secondary btn-sm" id="btnGoogleSignOut" style="display: none;">
+                    <i class="fa-solid fa-right-from-bracket"></i> Sair da Conta
+                </button>
+            </div>
+
+            <div class="user-profile">
+                <div class="avatar-container">
+                    <div class="avatar" id="userAvatar">
+                        <i class="fa-solid fa-user-ninja"></i>
+                    </div>
+                    <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
+                    <button class="change-avatar-btn" id="btnChangeAvatar" title="Mudar Avatar (Clique para fazer upload)">
+                        <i class="fa-solid fa-camera"></i>
+                    </button>
+                </div>
+                <div class="user-info">
+                    <h2 id="userName" contenteditable="true" title="Clique para editar seu nome">Leitor Misterioso</h2>
+                    <span class="user-email" id="userEmail" style="display: none;">email@google.com</span>
+                    <span class="edit-hint"><i class="fa-solid fa-pen"></i> Clique para editar</span>
+                </div>
+            </div>
+
+            <div class="stats-panel">
+                <div class="stat-card">
+                    <span class="stat-value" id="statsCount">0</span>
+                    <span class="stat-label">Lidos</span>
+                </div>
+                <div class="rank-card">
+                    <span class="rank-badge" id="rankBadge">Leitor Iniciante 🌱</span>
+                    <span class="rank-label">Sua Classificação</span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" id="btnOpenAddModal">
+                <i class="fa-solid fa-plus"></i> Adicionar Novo Livro
+            </button>
+
+            <div class="divider"></div>
+
+            <!-- Estantes de Amigos -->
+            <div class="friends-section">
+                <h3><i class="fa-solid fa-users"></i> Estantes de Amigos</h3>
+                <p class="friends-subtitle">Veja o que seus amigos andam lendo</p>
+                <div class="friends-list" id="friendsList">
+                    <!-- Amigos inseridos via JS -->
+                </div>
+                <button class="btn btn-secondary btn-sm" id="btnShareLibrary">
+                    <i class="fa-solid fa-share-nodes"></i> Compartilhar Minha Estante
+                </button>
+            </div>
+        </aside>
+
+        <!-- Área Principal (Estante de Livros) -->
+        <main class="main-content">
+            <header class="library-header">
+                <div class="library-title-container">
+                    <h1 id="libraryTitle">Minha Estante</h1>
+                    <div class="viewing-friend-banner" id="friendBanner" style="display: none;">
+                        <span>Visualizando estante de <strong id="friendName">Amigo</strong></span>
+                        <button class="btn-clear" id="btnBackToMyLibrary"><i class="fa-solid fa-circle-xmark"></i> Voltar para a minha</button>
+                    </div>
+                </div>
+                
+                <div class="library-controls">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="searchInput" placeholder="Buscar por título ou autor...">
+                    </div>
+                    <div class="filter-controls">
+                        <button class="btn-toggle active" id="btnSortAlpha" title="Ordem Alfabética">
+                            <i class="fa-solid fa-sort-alpha-down"></i> Título (A-Z)
+                        </button>
+                        <button class="btn-toggle" id="btnSortDate" title="Leituras mais recentes primeiro">
+                            <i class="fa-solid fa-calendar-days"></i> Mais Recente
+                        </button>
+                        <button class="btn-toggle" id="btnSortAuthor" title="Agrupar por Autor">
+                            <i class="fa-solid fa-user-tag"></i> Agrupar por Autor
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- A Estante Física (com prateleiras) -->
+            <div class="bookshelf-container" id="bookshelf">
+                <!-- As prateleiras e livros serão renderizados aqui pelo JS -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: Adicionar/Editar Livro -->
+    <div class="modal-backdrop" id="addBookModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modalTitle">Adicionar Livro</h3>
+                <button class="close-modal-btn" onclick="closeModal('addBookModal')">&times;</button>
+            </div>
+            <form id="addBookForm">
+                <input type="hidden" id="editBookId">
+                <div class="form-group">
+                    <label for="bookTitleInput">Título do Livro *</label>
+                    <input type="text" id="bookTitleInput" required placeholder="Ex: O Senhor dos Anéis">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookAuthorInput">Autor *</label>
+                        <input type="text" id="bookAuthorInput" required placeholder="Ex: J.R.R. Tolkien">
+                    </div>
+                    <div class="form-group">
+                        <label for="bookDateInput">Data de finalização da leitura *</label>
+                        <input type="date" id="bookDateInput" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Sua Avaliação (0-5 Estrelas) *</label>
+                        <div class="rating-input-container">
+                            <div class="star-rating-selector" id="starRatingSelector">
+                                <span class="star-input-btn" data-value="1"><i class="fa-regular fa-star"></i></span>
+                                <span class="star-input-btn" data-value="2"><i class="fa-regular fa-star"></i></span>
+                                <span class="star-input-btn" data-value="3"><i class="fa-regular fa-star"></i></span>
+                                <span class="star-input-btn" data-value="4"><i class="fa-regular fa-star"></i></span>
+                                <span class="star-input-btn" data-value="5"><i class="fa-regular fa-star"></i></span>
+                            </div>
+                            <input type="number" id="bookRatingInput" min="0" max="5" step="0.1" required placeholder="Nota" class="rating-number-input">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bookColorInput">Cor da Lombada/Capa</label>
+                        <div class="color-palette" id="colorPalette">
+                            <!-- Cores selecionáveis -->
+                        </div>
+                        <input type="hidden" id="bookColorInput" value="#6B1D1D">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="label-with-action">
+                        <label for="bookSummaryWebInput">Resumo da internet</label>
+                        <button type="button" class="btn-inline" id="btnAutoSummary">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Buscar resumo na web
+                        </button>
+                    </div>
+                    <textarea id="bookSummaryWebInput" rows="3" placeholder="Resumo importado da internet..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bookSummaryPersonalInput">Resumo pessoal do livro:</label>
+                    <textarea id="bookSummaryPersonalInput" rows="3" placeholder="Escreva suas próprias observações, lições e pensamentos sobre a obra..."></textarea>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addBookModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btnSaveBook">Salvar na Estante</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Detalhes do Livro (Visão da Capa) -->
+    <div class="modal-backdrop" id="bookDetailsModal">
+        <div class="book-detail-wrapper">
+            <button class="close-detail-btn" onclick="closeModal('bookDetailsModal')">&times;</button>
+            
+            <div class="book-interactive-container">
+                <!-- Parte Esquerda: Capa do Livro Físico -->
+                <div class="book-cover-view" id="detailCoverView">
+                    <div class="book-cover-spine-edge"></div>
+                    <div class="book-cover-content">
+                        <span class="book-cover-author" id="detailCoverAuthor">AUTOR</span>
+                        <h2 class="book-cover-title" id="detailCoverTitle">TÍTULO DO LIVRO</h2>
+                        <div class="book-cover-rating-container">
+                            <div class="stars-display font-light" id="detailCoverStars">
+                                <!-- Estrelas da capa -->
+                            </div>
+                        </div>
+                        <div class="book-cover-footer">BIBLIOTECA PESSOAL</div>
+                    </div>
+                </div>
+                
+                <!-- Parte Direita: Informações e Resenha -->
+                <div class="book-info-view">
+                    <div class="info-header">
+                        <span class="info-author" id="detailInfoAuthor">J.R.R. Tolkien</span>
+                        <h2 class="info-title" id="detailInfoTitle">O Senhor dos Anéis</h2>
+                        <div class="info-meta">
+                            <span class="info-date">
+                                <i class="fa-regular fa-calendar-check"></i> Finalizado em: <span id="detailInfoDate">10/05/2026</span>
+                            </span>
+                            <div class="info-rating-badge-container">
+                                <div class="stars-display" id="detailInfoStars">
+                                    <!-- Estrelas inseridas via JS -->
+                                </div>
+                                <span class="rating-number-badge" id="detailInfoRatingBadge">4.5</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-divider"></div>
+                    
+                    <div class="info-body">
+                        <div class="summary-block">
+                            <h3><i class="fa-solid fa-globe"></i> Resumo da Internet</h3>
+                            <p id="detailInfoSummaryWeb">Carregando resumo...</p>
+                        </div>
+                        
+                        <div class="summary-block personal-block">
+                            <h3><i class="fa-solid fa-pen-nib"></i> Resumo pessoal do livro:</h3>
+                            <p id="detailInfoSummaryPersonal">Nossas observações pessoais...</p>
+                        </div>
+                    </div>
+
+                    <div class="info-footer" id="detailActions">
+                        <button class="btn btn-secondary btn-sm" id="btnEditBook"><i class="fa-solid fa-edit"></i> Editar</button>
+                        <button class="btn btn-danger btn-sm" id="btnDeleteBook"><i class="fa-solid fa-trash"></i> Excluir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
